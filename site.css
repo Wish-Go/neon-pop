@@ -7,6 +7,7 @@
   --link: #2997ff;
   --shell: 980px;
   --measure: 692px;
+  color-scheme: dark;
   --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
           "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
 }
@@ -42,7 +43,9 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
 }
 .nav-in {
-  max-width: var(--shell); height: 100%; margin: 0 auto;
+  /* 外槽算在 max-width 之内的话,顶栏内容只剩 936,和正文的 980 差 22px,
+     左右基准线肉眼可见地错开 */
+  max-width: calc(var(--shell) + 44px); height: 100%; margin: 0 auto;
   padding: 0 22px;
   display: flex; align-items: center; gap: 14px;
 }
@@ -85,9 +88,12 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
   width: clamp(112px, 17vw, 156px); aspect-ratio: 1;
   margin: 0 auto clamp(28px, 4vw, 40px);
   border-radius: 23%;
-  box-shadow: 0 24px 60px -20px rgba(120, 80, 220, 0.55);
 }
-.hero h1 { margin-bottom: 18px; }
+.hero h1 {
+  margin-bottom: 18px;
+  /* 通用负字距是给混合大小写标题的;全大写字标挤在一起,回正一点 */
+  letter-spacing: -0.005em;
+}
 .hero .lede { margin: 0 auto; max-width: 22ch; }
 
 .hero-shot {
@@ -102,8 +108,13 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
 
 .grid {
   display: grid; gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: 1fr;
   margin-top: clamp(44px, 6vw, 68px);
+}
+/* 显式单列 -> 三列。auto-fit 会在中间宽度停在两列,
+   第三张卡独占次行左侧、右边留一个等宽空洞 */
+@media (min-width: 760px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
 }
 .card {
   background: rgba(255, 255, 255, 0.04);
@@ -141,53 +152,6 @@ footer .shell { display: flex; flex-wrap: wrap; gap: 12px 26px; align-items: cen
 footer a { color: var(--grey); }
 footer a:hover { color: var(--ink); text-decoration: none; }
 footer .spacer { margin-left: auto; }
-
-/* ── legal documents ────────────────────────────────── */
-
-.doc { padding-top: clamp(56px, 8vw, 88px); }
-.doc h1 { font-size: clamp(36px, 5.6vw, 56px); margin-bottom: 14px; }
-.doc .stamp {
-  color: var(--grey); font-size: 15px;
-  padding-bottom: 30px; margin-bottom: 42px;
-  border-bottom: 1px solid var(--line);
-}
-.doc h2 {
-  font-size: 25px; letter-spacing: -0.018em;
-  margin: 52px 0 14px; scroll-margin-top: 72px;
-}
-.doc h2:first-of-type { margin-top: 0; }
-.doc p, .doc li { color: #c7c7cc; font-size: 17px; line-height: 1.65; }
-.doc p + p { margin-top: 15px; }
-.doc ul { margin: 15px 0 0; padding-left: 21px; }
-.doc li { margin-bottom: 9px; }
-.doc li::marker { color: var(--grey); }
-.doc strong { color: var(--ink); font-weight: 600; }
-
-.toc {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 22px 26px; margin-bottom: 52px;
-}
-.toc p {
-  font-size: 12px; font-weight: 600; color: var(--grey);
-  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px;
-}
-.toc ol { margin: 0; padding-left: 19px; }
-.toc li { font-size: 15px; margin-bottom: 6px; color: var(--grey); }
-.toc a { color: var(--ink); }
-
-.callout {
-  background: rgba(41, 151, 255, 0.09);
-  border: 1px solid rgba(41, 151, 255, 0.22);
-  border-radius: 14px; padding: 20px 22px; margin: 24px 0 0;
-}
-.callout p { color: var(--ink); font-size: 16px; }
-
-.contact {
-  margin-top: 56px; padding-top: 30px;
-  border-top: 1px solid var(--line);
-}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
