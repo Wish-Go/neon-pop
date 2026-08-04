@@ -27,7 +27,4 @@ Coming to Google Play.
 - [Terms of Service](https://wish-go.github.io/neonpop-legal/terms.html)
 - Something broken or unfair? <aslm2l1k123@gmail.com>
 
-### This repo
 
-The site itself — one page, one stylesheet, no build step. Edit and push; GitHub Pages
-picks it up in about a minute.
