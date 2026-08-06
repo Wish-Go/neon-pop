@@ -56,7 +56,13 @@ a:hover { text-decoration: underline; }
   letter-spacing: -0.005em;
 }
 .nav-links { margin-left: auto; display: flex; gap: 22px; }
-.nav-links a { font-size: 12px; color: var(--grey); }
+.nav-links a {
+  font-size: 12px; color: var(--grey);
+  /* 撑满 48px 高的顶栏:内 padding 扩命中盒、等量负 margin 抵消对布局的影响。
+     文字只有 12px,不扩的话可点区域远低于移动端 44px 的下限 */
+  padding: 15px 4px;
+  margin: -15px -4px;
+}
 .nav-links a:hover { color: var(--ink); text-decoration: none; }
 
 /* ── sections ───────────────────────────────────────── */
@@ -98,6 +104,9 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
 
 .hero-shot {
   margin: clamp(48px, 7vw, 84px) auto 0;
+  /* width 必须显式给 100%:img 的固有宽 1024 会让 max-width 变成"下限"而不是上限,
+     auto 外边距过约束后向右溢出 —— 375px 视口实测横向溢出 507px */
+  width: 100%;
   max-width: 860px;
   border-radius: 18px;
   border: 1px solid var(--line);
@@ -113,7 +122,12 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
 }
 /* 显式单列 -> 三列。auto-fit 会在中间宽度停在两列,
    第三张卡独占次行左侧、右边留一个等宽空洞 */
-@media (min-width: 760px) {
+@media (min-width: 600px) and (max-width: 899.98px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  /* 第三张通栏:两栏放三张必然剩一个等宽空洞,通栏比空着好看 */
+  .grid .card:last-child { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
   .grid { grid-template-columns: repeat(3, 1fr); }
 }
 .card {
