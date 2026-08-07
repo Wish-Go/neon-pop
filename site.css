@@ -43,8 +43,6 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
 }
 .nav-in {
-  /* 外槽算在 max-width 之内的话,顶栏内容只剩 936,和正文的 980 差 22px,
-     左右基准线肉眼可见地错开 */
   max-width: calc(var(--shell) + 44px); height: 100%; margin: 0 auto;
   padding: 0 22px;
   display: flex; align-items: center; gap: 14px;
@@ -52,15 +50,13 @@ a:hover { text-decoration: underline; }
 .nav-mark { display: flex; align-items: center; gap: 9px; }
 .nav-mark img { width: 20px; height: 20px; border-radius: 5px; }
 .nav-name {
-  text-transform: uppercase;   /* 字标外观全大写;标记里存真名 Neon Pop */
+  text-transform: uppercase;   
   font-size: 14px; font-weight: 600; color: var(--ink);
   letter-spacing: -0.005em;
 }
 .nav-links { margin-left: auto; display: flex; gap: 22px; }
 .nav-links a {
   font-size: 12px; color: var(--grey);
-  /* 撑满 48px 高的顶栏:内 padding 扩命中盒、等量负 margin 抵消对布局的影响。
-     文字只有 12px,不扩的话可点区域远低于移动端 44px 的下限 */
   padding: 15px 4px;
   margin: -15px -4px;
 }
@@ -97,17 +93,14 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
   border-radius: 23%;
 }
 .hero h1 {
-  text-transform: uppercase;   /* 同上:外观是字标,内容是产品名 */
+  text-transform: uppercase;   
   margin-bottom: 18px;
-  /* 通用负字距是给混合大小写标题的;全大写字标挤在一起,回正一点 */
   letter-spacing: -0.005em;
 }
 .hero .lede { margin: 0 auto; max-width: 22ch; }
 
 .hero-shot {
   margin: clamp(48px, 7vw, 84px) auto 0;
-  /* width 必须显式给 100%:img 的固有宽 1024 会让 max-width 变成"下限"而不是上限,
-     auto 外边距过约束后向右溢出 —— 375px 视口实测横向溢出 507px */
   width: 100%;
   max-width: 860px;
   border-radius: 18px;
@@ -122,11 +115,8 @@ h3 { font-size: 22px; letter-spacing: -0.015em; line-height: 1.2; }
   grid-template-columns: 1fr;
   margin-top: clamp(44px, 6vw, 68px);
 }
-/* 显式单列 -> 三列。auto-fit 会在中间宽度停在两列,
-   第三张卡独占次行左侧、右边留一个等宽空洞 */
 @media (min-width: 600px) and (max-width: 899.98px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
-  /* 第三张通栏:两栏放三张必然剩一个等宽空洞,通栏比空着好看 */
   .grid .card:last-child { grid-column: 1 / -1; }
 }
 @media (min-width: 900px) {
